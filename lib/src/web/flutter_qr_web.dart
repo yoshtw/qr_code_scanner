@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:core';
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:js_util';
 import 'dart:ui' as ui;
 
@@ -63,7 +65,7 @@ class _WebQrViewState extends State<WebQrView> {
   Timer? timer;
   String? code;
   String? _errorMsg;
-  var video;
+  dynamic video;
   String viewID = 'QRVIEW-' + DateTime.now().millisecondsSinceEpoch.toString();
 
   final StreamController<Barcode> _scanUpdateController =
