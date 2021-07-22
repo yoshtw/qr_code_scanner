@@ -265,7 +265,9 @@ class QRView(messenger: BinaryMessenger, id: Int, private val params: HashMap<St
                 }
             }
             else -> {
-                result?.error("cameraPermission", "Platform Version to low for camera permission check", null)
+                // No permission to be set before Android 6 (M)
+                permissionGranted = true
+                channel.invokeMethod("onPermissionSet", true)
             }
         }
     }
