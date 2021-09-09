@@ -120,15 +120,24 @@ class _WebQrViewState extends State<WebQrView> {
     }
 
     try {
-      var constraints = UserMediaOptions(
-          video: VideoOptions(
-        facingMode: (facing == CameraFacing.front ? 'user' : 'environment'),
-      ));
+      final devices = await html.window.navigator.mediaDevices!.enumerateDevices();
+
+      var stream = await html.window.navigator.mediaDevices?.getUserMedia({
+        'video': {
+          'deviceId': devices.where((d) => d.kind == 'videoinput').last.deviceId, // take the last camera
+          'width': {'ideal': 4096}, // ideal resolution, browser than picks the closest available
+          'height': {'ideal': 2160},
+        }
+      });
+      //var constraints = UserMediaOptions(
+      //    video: VideoOptions(
+      //  facingMode: (facing == CameraFacing.front ? 'user' : 'environment'),
+      //));
       // dart style, not working properly:
       // var stream =
       //     await html.window.navigator.mediaDevices.getUserMedia(constraints);
       // straight JS:
-      var stream = await promiseToFuture(getUserMedia(constraints));
+      //var stream = await promiseToFuture(getUserMedia(constraints));
       _localStream = stream;
       video.srcObject = _localStream;
       video.setAttribute('playsinline',
