@@ -128,6 +128,7 @@ class _WebQrViewState extends State<WebQrView> {
           'width': { min: 1024, ideal: 1280, max: 1920 },
           'height': { min: 576, ideal: 720, max: 1080 },
           'facingMode': (facing == CameraFacing.front ? 'user' : 'environment')
+        }
       });
       //var constraints = UserMediaOptions(
       //    video: VideoOptions(
