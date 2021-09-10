@@ -124,10 +124,10 @@ class _WebQrViewState extends State<WebQrView> {
 
       var stream = await html.window.navigator.mediaDevices?.getUserMedia({
         'video': {
-          'deviceId': devices.where((d) => d.kind == 'videoinput').first.deviceId, // take the last camera
-          'width': {'ideal': 1920}, // ideal resolution, browser than picks the closest available
-          'height': {'ideal': 1080},
-        }
+          // 'deviceId': devices.where((d) => d.kind == 'videoinput').first.deviceId, // take the last camera
+          'width': { min: 1024, ideal: 1280, max: 1920 },
+          'height': { min: 576, ideal: 720, max: 1080 },
+          'facingMode': CameraFacing.front ? 'user' : 'environment'
       });
       //var constraints = UserMediaOptions(
       //    video: VideoOptions(
