@@ -19,7 +19,6 @@ import 'media.dart';
 ///
 /// Copyright 2020 @treeder
 /// Copyright 2021 The one with the braid
-
 class WebQrView extends StatefulWidget {
   final QRViewCreatedCallback onPlatformViewCreated;
   final CameraFacing? cameraFacing;
@@ -120,25 +119,15 @@ class _WebQrViewState extends State<WebQrView> {
     }
 
     try {
-      final devices = await html.window.navigator.mediaDevices!.enumerateDevices();
-
-      var stream = await html.window.navigator.mediaDevices?.getUserMedia({
-        'video': {
-          // 'deviceId': devices.where((d) => d.kind == 'videoinput').first.deviceId, // take the last camera
-          'width': { 'ideal': 1920 },
-          'height': { 'ideal': 1920 },
-          'facingMode': (facing == CameraFacing.front ? 'user' : 'environment')
-        }
-      });
-      //var constraints = UserMediaOptions(
-      //    video: VideoOptions(
-      //  facingMode: (facing == CameraFacing.front ? 'user' : 'environment'),
-      //));
+      var constraints = UserMediaOptions(
+          video: VideoOptions(
+        facingMode: (facing == CameraFacing.front ? 'user' : 'environment'),
+      ));
       // dart style, not working properly:
       // var stream =
       //     await html.window.navigator.mediaDevices.getUserMedia(constraints);
       // straight JS:
-      //var stream = await promiseToFuture(getUserMedia(constraints));
+      var stream = await promiseToFuture(getUserMedia(constraints));
       _localStream = stream;
       video.srcObject = _localStream;
       video.setAttribute('playsinline',
